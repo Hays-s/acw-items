@@ -1,7 +1,7 @@
 <template>
     <div class="details">
         <div id="banner">
-            <img src="../assets/img/fffd2a71f250e18d7a027194a09948fd.jpg" alt="">
+            <img src="../assets/details/fffd2a71f250e18d7a027194a09948fd.jpg" alt="">
         </div>
         <div class="nei">
             <div id="title">
@@ -29,16 +29,72 @@
             <div class="mai">产品卖点</div>
             <div class="shop">
                 <div v-for="(v,k) of 4" :key="k">
-                    <img src="../assets/img/gou.png" alt="">
+                    <img src="../assets/details/gou.png" alt="">
                     <span>正品保证</span>
                 </div>
+            </div>
+        </div>
+        <div class="xiang">
+            <div class="title">
+                <p>商品详情</p>
+                <div class="chan">
+                    <p>产地：中国</p>
+                </div>
+                <div>
+                    <img src="../assets/details/f626deb6c94d587db133badbfc1c8d9f (1).jpg" alt="">
+                </div>
+                <div>
+                    <img src="../assets/details/3dfe37a3933d6b71ed1bb4be29945de6.jpg" alt="">
+                </div>
+                <div>
+                    <img src="../assets/details/108fa04863d2c419626d75ee9d1d9f80.jpg" alt="">
+                </div>
+                <div>
+                    <img src="../assets/details/dbc7b19b48d738a66006836518f7aa34.jpg" alt="">
+                </div>
+                <div>
+                    <img src="../assets/details/082a274ace2bd79b2ab3acfa1d8b3ca3.jpg" alt="">
+                </div>
+                <div>
+                    <img src="../assets/details/92becbc30fce6ab5b6346866c194d142.jpg" alt="">
+                </div>
+                <div class="shuo">
+                    <p><b>价格说明</b></p>
+                    <p><b>非会员购买价：</b>是您未成为爱宠会员购买商品的价格</p>
+                    <p><b>会员专享价：</b>是您已成为爱宠会员购买商品的价格划线价：可能是商品的专柜价、吊牌价、零售价、指导价或该商品曾经展示的销售价等，并非《价格法》、《禁止价格欺诈行为得规定》规定的”原价”，仅供您参考。</p>
+                    <p><b>特别提示：</b>最终成交价格可能因为您是会员或者非会员或者使用优惠券等发生变化，最终以该订单结算页的价格为准。</p>
+                </div>
+            </div>
+        </div>
+        <div class="bottom">
+            <div>
+                <div>
+                    <router-link to="javascript:;">
+                        <img src="../assets/details/ft1-on.png" alt="">
+                        <p>更多</p>
+                    </router-link>
+                </div>
+                <div>
+                    <router-link to="javascript:;">
+                        <img src="../assets/details/ft2.png" alt="">
+                        <p>客服</p>
+                    </router-link>
+                </div>
+            </div>
+            <div>
+                <button>
+                    <router-link to="javascript:;">立即购买</router-link>
+                </button>
+                <button>
+                    <router-link to="javascript:;">领取会员</router-link>
+                </button>
             </div>
         </div>
     </div>
 </template>
 <style>
     .details>#banner>img{
-        width: 375px;height: 373px;
+        width: 100%;
     }
     .details .nei,.nei1{
         padding: 10px 15px;
@@ -67,11 +123,11 @@
         color: #666;text-decoration: line-through;
     }
     .details #jiage>p:first-child{
-        background: url("../assets/img/taobao.png") no-repeat;
+        background: url("../assets/details/taobao.png") no-repeat;
         padding: 2px 30px;
     }
     .details #jiage>p:last-child{
-        background: url("../assets/img/jingdong.png") no-repeat;
+        background: url("../assets/details/jingdong.png") no-repeat;
         padding: 2px 30px;
         margin-top: 10px;
     }
@@ -108,7 +164,7 @@
     }
     .v{
         height: 42px;
-        background: url("../assets/img/openvip.png") no-repeat;
+        background: url("../assets/details/openvip.png") no-repeat;
         background-size: 100% 42px;
     }
     .v p{
@@ -124,7 +180,7 @@
     .mai{
         background-color: #fff6e3;
         border: 1px solid #ffe9ba;
-        background: url("../assets/img/maidian.png") no-repeat left center;
+        background: url("../assets/details/maidian.png") no-repeat left center;
         background-size: 40px 40px ;
         padding: 15px 40px;
         margin: 10px 0;
@@ -139,5 +195,88 @@
     .shop div>span{
         font-size: 12px;color: #333;
         margin-left: 5px;
+    }
+    .xiang{
+        background-color: #fff;
+    }
+    .xiang>.title{
+        padding: 10px 15px;
+    }
+    .xiang>.title>p{
+        font-size: 20px;color: #333;
+        font-weight: bold;
+        margin-top: 20px;
+    }
+    .xiang .chan{
+        font-size: 12px;color: #333;
+        height: 40px;
+        background-color: #F1F1F1;
+        margin: 10px 0;
+    }
+    .xiang .chan>p{
+        line-height: 40px;
+        padding-left: 10px;
+    }
+    .xiang img{
+        width: 100%;
+    }
+    .shuo{
+        background-color: #F1F1F1;
+        padding: 10px;
+        font-size: 12px;color: #333;
+        line-height: 18px;
+        margin-bottom: 50px;
+    }
+    .shuo p>b{
+        font-weight: bold;
+    }
+    .bottom{
+        height: 50px;
+        display: flex;
+        justify-content: space-between;
+        border-top: 1px solid #F1F1F1;
+        position: fixed;
+        background-color: #fff;
+        left: 0;right: 0;top: 0;z-index: 10;
+        top: 92.5%;
+    }
+    .bottom img{
+        width: 30px;
+        border: 0;
+    }
+    .bottom p{
+        font-size: 12px;color: #4a4a4a;
+    }
+    .bottom>div:first-child{
+        display: flex;
+    }
+    .bottom>div:first-child>div>a{
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+    }
+    .bottom>div:first-child>div{
+        margin-left: 15px;
+        margin-top: 3px;
+    }
+    .bottom>div:first-child>div:last-child{
+        margin-left: 25px;
+    }
+    .bottom>div:last-child{
+        display: flex;
+    }
+    .bottom button,.bottom button>a{
+        width: 8rem;height: 100%;
+        border: 0;
+        font-size: 15px;color: #fff;
+    }
+    .bottom button:first-child{
+        background-color: #DD1A21;
+    }
+    .bottom button:last-child{
+        background-color: #FF7300;
+    }
+    .bottom>div{
+        border-top: 0;
     }
 </style>
