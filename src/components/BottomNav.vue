@@ -10,7 +10,7 @@
         <img src="../assets/images/ft2-on.png" alt="" slot="icon" v-if="selectTab=='hos'">
         <img src="../assets/images/ft2.png" alt="" slot="icon" v-else>
       </mt-tab-item>
-      <mt-tab-item id="new">加入会员
+      <mt-tab-item id="member">加入会员
         <img src="../assets/images/ft4.png" alt="" slot="icon" v-if="selectTab=='new'">
         <img src="../assets/images/ft4.png" alt="" slot="icon" v-else>
       </mt-tab-item>
@@ -34,14 +34,17 @@ export default {
     selectTab(value){
       if(value=="index"){
         this.$router.push('/');
-      }else if(value=="me"){
-        this.$router.push('/button')
+      }else if(value=="hos"){
+        this.$router.push('/hos')
+      }else if(value=="member"){
+        this.$router.push('member')
       }
     }
   }
 }
 </script>
 <style>
+.bottom{max-width: 563px;}
 .bottom >div{
   border-top:1px solid #CACACA;
   } 

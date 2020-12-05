@@ -12,11 +12,17 @@ import VueRouter from 'vue-router'
 // import Register from '../views/Register.vue'
 // import Login from '../views/Login.vue'
 import Index from '../views/Index.vue'
+import Member from '../views/Member.vue'
 // import Article from '../views/Article.vue'
 /////////////////项目实践结束/////////////////////
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/member',
+    name: 'member',
+    component: Member
+  },
   {
     path: '/',
     name: 'index',
