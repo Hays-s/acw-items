@@ -8,8 +8,8 @@
   </div>
 </template>
 <style>
-.member .vip_top{
+/* .member .vip_top{
 
-}
+} */
 </style>
 
