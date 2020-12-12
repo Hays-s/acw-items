@@ -1,29 +1,29 @@
 <template>
     <div class="details">
         <div id="banner">
-            <img src="../assets/details/fffd2a71f250e18d7a027194a09948fd.jpg" alt="">
+            <img :src="banner" alt="">
         </div>
         <div class="nei">
             <div id="title">
                 <p>正品</p>
-                <p>疯狂小狗100g训练奖励零食 补钙零嘴</p>
+                <p>{{info.subject}}</p>
             </div>
             <div id="jiage">
-                <p>淘宝价：¥15.9</p>
-                <p>京东价：¥100</p>
+                <p>淘宝价：¥{{info.taobao.toFixed(2)}}</p>
+                <p>京东价：¥{{info.jd.toFixed(2)}}</p>
             </div>
         </div>
         <div class="opents">
             <div>
                 <p>会员价</p>
-                <p>¥9.9</p>
+                <p>¥{{info.price.toFixed(2)}}</p>
             </div>
             <p>98%的用户开通了会员</p>
         </div>
         <div class="nei1">
             <router-link to="javascript:;">
                 <div class="v">
-                    <p>在爱宠网买立省<span>6元</span>贵了包赔</p>
+                    <p>在爱宠网买立省<span>{{(info.taobao-info.price).toFixed(0)}}元</span>贵了包赔</p>
                 </div>
             </router-link>
             <div class="mai">产品卖点</div>
@@ -40,23 +40,8 @@
                 <div class="chan">
                     <p>产地：中国</p>
                 </div>
-                <div>
-                    <img src="../assets/details/f626deb6c94d587db133badbfc1c8d9f (1).jpg" alt="">
-                </div>
-                <div>
-                    <img src="../assets/details/3dfe37a3933d6b71ed1bb4be29945de6.jpg" alt="">
-                </div>
-                <div>
-                    <img src="../assets/details/108fa04863d2c419626d75ee9d1d9f80.jpg" alt="">
-                </div>
-                <div>
-                    <img src="../assets/details/dbc7b19b48d738a66006836518f7aa34.jpg" alt="">
-                </div>
-                <div>
-                    <img src="../assets/details/082a274ace2bd79b2ab3acfa1d8b3ca3.jpg" alt="">
-                </div>
-                <div>
-                    <img src="../assets/details/92becbc30fce6ab5b6346866c194d142.jpg" alt="">
+                <div v-for="(v,k) of image" :key="k">
+                    <img :src="v" alt="">
                 </div>
                 <div class="shuo">
                     <p><b>价格说明</b></p>
@@ -82,13 +67,41 @@
                 </div>
             </div>
             <div>
-                <button>
-                    <router-link to="javascript:;">立即购买</router-link>
-                </button>
+                <button @click="gou">加入购物车</button>
                 <button>
                     <router-link to="javascript:;">领取会员</router-link>
                 </button>
             </div>
+            <mt-popup v-model="popupVisible" position="bottom" pop-transition="popup-fade" model class="gou">
+                <div>
+                    <div class="top">
+                        <p>已选商品</p>
+                    </div>
+                    <div class="main">
+                        <div class="image">
+                            <img :src="banner" alt="">
+                        </div>
+                        <div class="right">
+                            <div>
+                                <p>{{info.subject}}</p>
+                                <p>¥{{info.price.toFixed(2)}}</p>
+                            </div>
+                            <div>
+                                <button @click="jian"><span>-</span></button>
+                                <span>{{n}}</span>
+                                <button @click="jia"><span>+</span></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom">
+                        <div>
+                            <img src="../assets/details/gouwuche.png" alt="">
+                            <p id="p1">¥{{(info.price*n).toFixed(2)}}</p>
+                        </div>
+                        <mt-button type="primary" @click="cart">加入购物车</mt-button>
+                    </div>
+                </div>
+            </mt-popup>
         </div>
     </div>
 </template>
@@ -111,6 +124,8 @@
         padding: 2.5px;color: #fff;
         border-radius: 3px;
         line-height: 22px;
+        text-align: center;
+        font-size: 15px;
     }
     .details #title>p:last-child{
         font-size: 20px;color: #333;
@@ -125,11 +140,13 @@
     .details #jiage>p:first-child{
         background: url("../assets/details/taobao.png") no-repeat;
         padding: 2px 30px;
+        font-size: 15px;
     }
     .details #jiage>p:last-child{
         background: url("../assets/details/jingdong.png") no-repeat;
         padding: 2px 30px;
         margin-top: 10px;
+        font-size: 15px;
     }
     .details .opents{
         display: flex;
@@ -184,6 +201,7 @@
         background-size: 40px 40px ;
         padding: 15px 40px;
         margin: 10px 0;
+        font-size: 15px;
     }
     .shop{
         display: flex;
@@ -266,7 +284,7 @@
         display: flex;
     }
     .bottom button,.bottom button>a{
-        width: 8rem;height: 100%;
+        width: 3.5rem;height: 100%;
         border: 0;
         font-size: 15px;color: #fff;
     }
@@ -279,4 +297,150 @@
     .bottom>div{
         border-top: 0;
     }
+    .gou{
+        width: 100%;background-color: #F5F5F5;
+        height: 200px;
+    }
+    .image>img{
+        width: 80px;height: 80px;
+        background-color: lightgrey;
+        border-radius: 5px;
+        margin-right:5px ;
+    }
+    .main{
+        display: flex;
+        justify-content: space-around;
+        padding: 10px 15px;
+        border-bottom: 1px solid #ccc;
+    }
+    .right>div:first-child>p:first-child{
+        font-size: 14px;font-weight: bold;
+        color: #333;
+    }
+    .right>div:first-child>p:nth-child(2){
+        font-size: 14px;font-weight: bold;
+        color: #DD1A21;
+        margin-top: 10px;
+    }
+    .right{
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 20px;
+    }
+    .right>div:last-child{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin-left: 15px;
+    }
+    .right>div:last-child>button{
+        width: 25px;height: 25px;
+        border-radius: 50%;
+        text-align: center;
+        outline: none;
+    }
+    .right>div:last-child>button:first-child{
+        border: 1px solid lightblue;
+        background-color: #fff;
+    }
+    .right>div:last-child>button:first-child>span{
+        color: rgb(48, 180, 224);
+        font-size: 16px;font-weight: bold;
+    }
+    .right>div:last-child>button:last-child{
+        background-color: rgb(63, 163, 226);
+    }
+    .right>div:last-child>span{
+        margin: 0 5px;
+        font-size: 15px;
+    }
+    .gou .top{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0 5px 30px;
+    }
+    .gou .top>button{
+        font-size: 14px;
+        background-color: transparent;
+        width: 100px;
+        color: #999;
+    }
+    .gou .top>p{
+        font-size: 14px;color: #333;
+        font-weight: bold;
+    }
+    .gou .bottom{
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 15px 10px 25px;
+        position: relative;
+    }
+    .gou .bottom>div{
+       display: flex;
+       justify-content: space-around;
+       align-items: center;
+    }
+    .gou .bottom>div>p{
+        font-size: 18px;color: #DD1A21;
+        margin-left: 10px;
+    }
+    .gou .bottom>.mint-button{
+        height: 40px;width: 100px;
+        background-color: #DD1A21;
+    }
 </style>
+<script>
+export default {
+    data(){
+        return{
+            info:{price:0,taobao:0,jd:0},
+            image:[],
+            banner:'',
+            n:1,
+            popupVisible:false
+        }
+    },
+    methods:{
+        gou(){
+            this.popupVisible=true;
+        },
+        jian(){
+            if(this.n>1){
+                this.n--;
+            }
+        },
+        jia(){
+            this.n++;
+        },
+        cart(){
+            let obj={
+                id:this.$route.params.lid,
+                number:this.n,
+                price:this.info.price,
+                avatar:this.banner,
+                subject:this.info.subject
+            }
+            this.axios.post('/cart',this.qs.stringify(obj)).then(res=>{
+                if(res.data.code==200){
+                    this.$router.push('/');
+                }
+            })
+        }
+    },
+    mounted(){
+        this.axios.get('/details',{params:{lid:this.$route.params.lid}}).then(res=>{
+            this.info=res.data.results;
+            let img=res.data.results.image.split("#");
+            let image=[]
+            for(var item of img){
+                this.info.image=require("../assets/details_image/"+item)
+                image.push(this.info.image);
+            }
+            this.banner=image.shift()
+            this.image=image;
+        })
+    }
+}
+</script>

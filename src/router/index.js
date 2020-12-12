@@ -23,7 +23,7 @@ const routes = [
     component: Index
   },
   {
-    path:'/details',
+    path:'/details/:lid',
     component:()=>import(/*webpackChunkName:"details" */ '../views/Detauls.vue')
   }
   // {

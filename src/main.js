@@ -6,6 +6,7 @@ import axios from 'axios'
 import qs from 'qs'
 axios.defaults.baseURL = 'http://127.0.0.1:3000'
 Vue.prototype.axios = axios;
+Vue.prototype.qs= qs ;
 Vue.config.productionTip = false
 //导入MintUI模块
 import MintUI from 'mint-ui';
