@@ -12,11 +12,23 @@ import VueRouter from 'vue-router'
 // import Register from '../views/Register.vue'
 // import Login from '../views/Login.vue'
 import Index from '../views/Index.vue'
+import Login from '../views/Login.vue'
+import Register from '../views/Register.vue'
 // import Article from '../views/Article.vue'
 /////////////////项目实践结束/////////////////////
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/register',
+    name: 'register',
+    component: Register
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: Login
+  },
   {
     path: '/',
     name: 'index',

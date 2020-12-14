@@ -1,5 +1,5 @@
 <template>
-  <div class="register">
+  <div class="login">
     <!-- 顶部导航 -->
     <mt-header>
       <!-- 返回按钮的页面路径未定 -->
@@ -9,9 +9,16 @@
     </mt-header>
     <div class="body">
       <!-- 标题 -->
-      <h2 class="title">密码登录</h2>
+      <h2 class="title">注册</h2>
       <!-- 表单区域 -->
       <div class="form">
+        <!-- 昵称 -->
+        <mt-field
+          type="text"
+          label="昵称"
+          placeholder="请输入昵称"
+          v-model="uname"
+        ></mt-field>
         <!-- 手机号 -->
         <mt-field
           type="text"
@@ -19,6 +26,7 @@
           placeholder="请输入手机号"
           v-model="phone"
           @blur.native.capture="phonemsg(0)"
+          :state="phoneState"
         ></mt-field>
         <!-- 密码 -->
         <mt-field
@@ -27,9 +35,14 @@
           placeholder="请输入密码"
           v-model="password"
           @blur.native.capture="passwordmsg(0)"
+          :state="passwordState"
         ></mt-field>
-        <!--登录按钮-->
-        <mt-button size="large" @click="handle">登录</mt-button>
+        <!-- 验证码 -->
+        <mt-field type="text" label="验证码" placeholder="请输入验证码"
+          ><mt-button size="small" plain>获取验证码</mt-button></mt-field
+        >
+        <!--注册按钮-->
+        <mt-button size="large" @click="handle">注册</mt-button>
       </div>
     </div>
   </div>
@@ -38,22 +51,22 @@
 .body {
   padding: 0 10px;
 }
-.register > .body > .title {
+.login > .body > .title {
   margin: 35px 0px;
   font-size: 32px;
   font-weight: bold;
 }
-.register > .body > .form > button {
+.login > .body > .form > button {
   background-color: #d95a48;
   color: white;
 }
-.register > .mint-header {
+.login > .mint-header {
   background: white;
 }
-.register > .mint-header > .mint-header-button {
+.login > .mint-header > .mint-header-button {
   color: black;
 }
-.register .mint-field .mint-cell-title {
+.login .mint-field .mint-cell-title {
   width: 80px;
 }
 </style>
@@ -64,14 +77,18 @@ import { MessageBox } from "mint-ui";
 export default {
   data() {
     return {
+      uname: "",
       phone: "",
+      phoneState: "",
       password: "",
+      passwordState: "",
     };
   },
   methods: {
-    phonemsg(htk) {
+    unamemsg(utk) {
       let phoneRegExp = /^1[3-9][0-9]{9}$/;
       if (phoneRegExp.test(this.phone)) {
+        this.phoneState = "success";
         return true;
       } else {
         if (htk)
@@ -80,12 +97,30 @@ export default {
             position: "bottom",
             duration: 1000,
           });
+        this.phoneState = "error";
+        return false;
+      }
+    },
+    phonemsg(htk) {
+      let phoneRegExp = /^1[3-9][0-9]{9}$/;
+      if (phoneRegExp.test(this.phone)) {
+        this.phoneState = "success";
+        return true;
+      } else {
+        if (htk)
+          this.$toast({
+            message: "手机号错误",
+            position: "bottom",
+            duration: 1000,
+          });
+        this.phoneState = "error";
         return false;
       }
     },
     passwordmsg(atk) {
       let passwordRegExp = /^[0-9A-Za-z]{8,14}$/;
       if (passwordRegExp.test(this.password)) {
+        this.passwordState = "success";
         return true;
       } else {
         if (atk)
@@ -94,26 +129,23 @@ export default {
             position: "bottom",
             duration: 1000,
           });
+        this.passwordState = "error";
         return false;
       }
     },
+    //请求
     handle() {
       if (this.phonemsg(1) && this.passwordmsg(1)) {
         let obj = {
+          uname:this.uname,
           phone: this.phone,
           password: this.password,
         };
         let str = this.qs.stringify(obj);
-        this.axios.post("/login", str).then((res) => {
-          //登录失败
-          if (res.data.code == 201) {
-            MessageBox("提示", "账号或密码错误");
-          }
-          if (res.data.code == 200) {
-            MessageBox.alert("登录成功!").then((action) => {
-              this.$router.push("/");
-            });
-          }
+        this.axios.post("/register", str).then((res) => {
+          MessageBox.alert("注册成功!").then((action) => {
+            this.$router.push("/login");
+          });
         });
       }
     },
@@ -128,4 +160,3 @@ export default {
   },
 };
 </script>
-
