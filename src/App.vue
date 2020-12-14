@@ -23,8 +23,4 @@ export default {
     );
   }
 }
-</script></script>
-
-<style>
-
-</style>
+</script>

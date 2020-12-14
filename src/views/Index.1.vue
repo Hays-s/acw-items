@@ -27,38 +27,70 @@
           </div>
         </div>
         <div class="shop_pz2">
-          <mt-swipe :auto="4000">
-          <mt-swipe-item class="pz2_swipe">
-            <img src="../assets/index_imag/Swipe1.jpg" alt="">
-          </mt-swipe-item>
-          <mt-swipe-item class="pz2_swipe">
-            <img src="../assets/index_imag/Swipe2.jpg" alt="">
-          </mt-swipe-item>
-          <mt-swipe-item class="pz2_swipe">
-            <img src="../assets/index_imag/Swipe3.jpg" alt="">
-          </mt-swipe-item>
-          </mt-swipe>
+          <router-link to="/">
+            <img src="../assets/index_imag/vip.png" alt="">
+          </router-link>
         </div>
       </div>
       <div class="index_top2">
         <ul>
-          <li v-for="(k,i) of category" :key="i">
+          <li>
             <router-link to="/">
-              <img :src="k.image" alt=""><span>{{k.category_name}}</span></router-link>
+              <img src="../assets/index_imag/icon_1.png" alt=""><span>狗粮</span></router-link>
+          </li>
+          <li>
+            <router-link to="/">
+              <img src="../assets/index_imag/icon_2.png" alt=""><span>猫粮</span></router-link>
+          </li>
+          <li>
+            <router-link to="/">
+              <img src="../assets/index_imag/icon_3.png" alt=""><span>猫零食</span></router-link>
+          </li>
+          <li>
+            <router-link to="/">
+              <img src="../assets/index_imag/icon_4.png" alt=""><span>猫砂</span></router-link>
+          </li>
+          <li>
+            <router-link to="/">
+              <img src="../assets/index_imag/icon_5.png" alt=""><span>狗零食</span></router-link>
+          </li>
+        </ul>
+      </div>
+      <div class="index_top2">
+        <ul>
+          <li>
+            <router-link to="/">
+              <img src="../assets/index_imag/icon_6.png" alt=""><span>营养保健</span></router-link>
+          </li>
+          <li>
+            <router-link to="/">
+              <img src="../assets/index_imag/icon_7.png" alt=""><span>洗护用品</span></router-link>
+          </li>
+          <li>
+            <router-link to="/">
+              <img src="../assets/index_imag/icon_8.png" alt=""><span>服饰打扮</span></router-link>
+          </li>
+          <li>
+            <router-link to="/">
+              <img src="../assets/index_imag/icon_9.png" alt=""><span>驱虫用品</span></router-link>
+          </li>
+          <li>
+            <router-link to="/">
+              <img src="../assets/index_imag/icon_10.png" alt=""><span>日常用品</span></router-link>
           </li>
         </ul>
       </div>
       <div class="index_top3">
         <div class="title_">特卖专区</div>
         <div class="shop_show">
-          <div class="shop_item" v-for="(k,i) of special" :key="i">
+          <div class="shop_item" v-for="(k,i) of 3" :key="i">
             <a href="#">
               <span class="shop_img">
-              <img :src="k.avatar" alt="">
+              <img src="../assets/index_imag/652a75e07552c3b160fb815a90e95ace.jpg" alt="">
               </span> 
-              <p class="shop_title">{{k.subject}}</p>
+              <p class="shop_title">【养猫必备】猫草种子水培猫草除毛球猫草种籽</p>
               <p class="shop_price">
-                <span>特价：￥</span><span class="font_size17">{{k.price}}</span>
+                <span>特价：￥</span><span class="font_size17">4.9</span>
               </p>
             </a>
           </div>
@@ -82,9 +114,9 @@
 .index .index_top1 {
   /* width: 100%; */
 
-  height: 2.94rem;
+  height: 3.94rem;
   background: url(../assets/index_imag/shop_bg.png) 0 -2.4rem no-repeat;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1rem;
   /* background-size: 100% */
 }
 .input_ {
@@ -144,14 +176,12 @@
     width: 93%;height: 2.28rem;
     margin: 0 auto;
     margin-top: 0.27rem;
-    border-radius: 0.6rem;
-    overflow: hidden;
   }
-.shop_pz2 img{width: 100%;}
+.shop_pz2 img{width: 100%}
   /* 内容2 */
 .index_top2{
-    height: 4.64rem;
-    margin-top: 2.3rem;
+    height: 2.32rem;
+    margin-top: 0.4rem;
     padding: 0 0.4rem;
     margin-bottom: 0.14rem;
   }
@@ -169,7 +199,6 @@
 .index_top2>ul>li span{
     display: block;
     color: #333;font-size: 0.32rem;
-    margin-bottom: 0.53rem;
     }
 .index_top2>ul>li img{
     /* display: inline-block; */
@@ -182,8 +211,7 @@
     width: 86%; 
     background-color:#fff; 
     margin: 0 auto;
-    padding: 0.27rem; 
-    margin-top: 0.53rem; 
+    padding: 0.27rem;  
   }
 .shop_show{
     display: flex;
@@ -201,7 +229,7 @@
   color: #4a4a4a;
   font-size: 0.32rem;
 }
-.index .shop_item .shop_img{display: inline-block;height: 2.67rem;border-radius: 0.2rem;overflow: hidden;}
+.index .shop_item .shop_img{display: inline-block;height: 2.67rem;}
 .index .shop_item span>img{width: 100%}
 .index .shop_title{height: 0.64rem;overflow: hidden;margin-bottom: 0.19rem;}
 .shop_price{color: #D0021B}
@@ -210,46 +238,6 @@
 .index .g_title img{width: 0.51rem;height: 0.51rem;vertical-align:middle;margin-right: 0.27rem }
 .index .g_title span{font-size: 0.45rem;margin-top: 2px;line-height: 1.33rem;}
 </style>
-<script>
-export default {
-  data(){
-    return {
-      category:[],
-      index_list:[],
-      special:[]
-    }
-  },
-  mounted(){
-    this.axios.get('/category').then(res=>{
-      // console.log(res.data)
-      let category=res.data.results
-      console.log(category)
-      category.forEach(item=>{
-        item.image=require('../assets/index_imag/'+item.category_image);
-      this.category.push(item)
-      })
-      console.log(this.category)
-    })
-    this.axios.get('/indexlist').then(res=>{
-      let index_list=res.data.results;
-      index_list.forEach(list=>{
-        list.avatar=require('../assets/Product_list/'+list.avatar);
-        this.index_list.push(list)
-      })
-    //   let special=[];
-    //   let special_1,special_2,special_3;
-    //  [special_1,special_2,special_3]=index_list
-    //  special.push(special_1,special_2,special_3)
-      
-      let special= index_list.splice(0,3)
-      this.special=special;
-      console.log(index_list)
-      console.log(special)
-    })
-  }
-}
-</script>
-
 
 
 
