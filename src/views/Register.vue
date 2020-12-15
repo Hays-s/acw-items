@@ -1,9 +1,9 @@
 <template>
-  <div class="login">
+  <div class="register">
     <!-- 顶部导航 -->
     <mt-header>
       <!-- 返回按钮的页面路径未定 -->
-      <router-link to="/" slot="left">
+      <router-link to="/login" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>
@@ -51,22 +51,22 @@
 .body {
   padding: 0 10px;
 }
-.login > .body > .title {
+.register > .body > .title {
   margin: 35px 0px;
   font-size: 32px;
   font-weight: bold;
 }
-.login > .body > .form > button {
+.register > .body > .form > button {
   background-color: #d95a48;
   color: white;
 }
-.login > .mint-header {
+.register > .mint-header {
   background: white;
 }
-.login > .mint-header > .mint-header-button {
+.register > .mint-header > .mint-header-button {
   color: black;
 }
-.login .mint-field .mint-cell-title {
+.register .mint-field .mint-cell-title {
   width: 80px;
 }
 </style>
