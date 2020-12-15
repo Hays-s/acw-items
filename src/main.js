@@ -16,6 +16,9 @@ Vue.use(MintUI);
 // 底部组件
 import BottomNav from './components/BottomNav.vue'
 Vue.component("bottom-nav",BottomNav)
+// qa页面顶部组件
+import QaHeader from './components/QaHeader.vue'
+Vue.component("qa-header",QaHeader)
 new Vue({
   router,
   store,
