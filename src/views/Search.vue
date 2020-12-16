@@ -10,40 +10,43 @@
           type="text"
           placeholder="请输入您想搜索的"
           name="keyword"
+          v-model="keyword"
+          @keyup.13="search"
         />
       </div>
       <ul class="list4">
         <!-- 单一文章信息始 -->
-        <li v-for="(ask,index) of 2" :key="index">
+        <li v-for="(ask,index) of resultList" :key="index">
           <!-- 提问标题始 -->
           <div class="title">
             <div class="ask-text">问</div>
-            <a href="/ask/69" class="desc">猫咪能吃鸡蛋吗</a>
+            <a href="/ask/69" class="desc" v-html="ask.subject"></a>
           </div>
           <!-- 提问标题止 -->
           <!-- 解答问题始 -->
           <div class="con">
             <div class="answer-text">答</div>
             <a href="/ask/69" class="desc1"
-              >有的猫咪可以吃鸡蛋，有的猫咪吃了鸡蛋之后会有一些不良反应，所以猫咪能不能吃鸡蛋要根据实际情况来看。1、有家长反应说，不同的...</a
+              v-html='ask.description'></a
             >
           </div>
           <!-- 解答问题止 -->
           <div class="btm">
             <div class="left">
               <img
-                src="../assets/images/QA/avatar/tx.jpg"
+                :src="ask.docavatar"
                 alt=""
                 class="face"
               />
-              <span class="name">张福礼</span>
-              上海市瑞派良良宠物医院
+              <span class="name">{{ask.docname}}</span>
+              {{ask.docaddress}}
             </div>
-            <span class="red">6.8w</span>
+            <span class="red">{{ask.vote_numbers}}W</span>
           </div>
         </li>
         <!-- 单一文章信息止 -->
       </ul>
+      <h2 class="show" v-if="isShowTip">没有搜索到匹配结果</h2>
       <!-- 底部一对一按钮 -->
       <div class="box5">
         <a href="https://m.ichong123.com/pipei.html" class="btn"
@@ -61,6 +64,10 @@
   </div>
 </template>
 <style>
+.serach .show{
+text-align: center;
+color:#D0021B;
+}
 .serach .list4>li{
   padding:0.4rem 0rem;
   display:flex;
@@ -187,5 +194,57 @@
 import QaBottom from "../components/QaBottom";
 export default {
   components: { QaBottom },
+  data(){
+    return{
+      keyword:"",
+      deviceList:[],
+      resultList:[],
+      isShowTip:false
+    }
+  },
+    methods: {
+    search () {
+      this.isShowTip = false
+      if (this.keyword == '') {
+        this.$messagebox.alert('请输入搜索内容')
+        return
+      }
+      this.axios.get('/quesansw')
+        .then((res) => {
+          let deviceList = res.data.results
+          deviceList.forEach((doctor)=>{
+           doctor.docavatar=require('../assets/images/QA/avatar/'+doctor.docavatar)
+          this.deviceList.push(doctor)
+         })
+          console.log(this.deviceList);
+        }).then(() => {
+          this.resultList = []
+          this.deviceList.forEach((item) => {
+            if (item.subject.indexOf(this.keyword) > -1 ||
+              item.description.indexOf(this.keyword) > -1
+              ) {
+              this.resultList.push(item)
+            }
+          })
+          if (this.resultList.length == 0) {
+            this.isShowTip = true
+          }
+          this.resultList.map((item) => {
+            item.subject = this.brightKeyword(item.subject)
+            item.description = this.brightKeyword(item.description)
+          })
+           this.deviceList = []
+           console.log(this.resultList);
+        })
+    },
+    brightKeyword (val) {
+      let keyword = this.keyword
+      if (val.indexOf(keyword) !== -1) {
+        return val.replace(keyword, `<font color='#42cccc'>${keyword}</font>`)
+      } else {
+        return val
+      }
+    }
+  }
 };
 </script>
