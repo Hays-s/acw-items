@@ -38,11 +38,18 @@
           :state="passwordState"
         ></mt-field>
         <!-- 验证码 -->
-        <mt-field type="text" label="验证码" placeholder="请输入验证码"
-          ><mt-button size="small" plain>获取验证码</mt-button></mt-field
+        <mt-field
+          type="text"
+          label="验证码"
+          placeholder="请输入验证码"
+          v-model="codevalue"
+          ><mt-button size="small" plain :disabled="dis" @click="codemsg">{{
+            codebutton
+          }}</mt-button></mt-field
         >
         <!--注册按钮-->
         <mt-button size="large" @click="handle">注册</mt-button>
+        <div class="code" :style="{ opacity: show }">验证码:{{ code }}</div>
       </div>
     </div>
   </div>
@@ -59,6 +66,7 @@
 .register > .body > .form > button {
   background-color: #d95a48;
   color: white;
+  margin-top: 10px;
 }
 .register > .mint-header {
   background: white;
@@ -69,6 +77,19 @@
 .register .mint-field .mint-cell-title {
   width: 80px;
 }
+.register .mint-cell-wrapper {
+  background-size: 0;
+  border-bottom: 1px solid #d9d9d9;
+}
+.register .code {
+  margin: 40px auto;
+  width: 30%;
+  border: 1px solid #d95a48;
+  font-size: 17px;
+  text-align: center;
+  opacity: 0;
+  transition: 3s;
+}
 </style>
 
 
@@ -77,11 +98,26 @@ import { MessageBox } from "mint-ui";
 export default {
   data() {
     return {
+      //昵称
       uname: "",
+      //手机号
       phone: "",
+      //手机号是否正确图标
       phoneState: "",
+      //密码
       password: "",
+      //密码是否正确图标
       passwordState: "",
+      //用户输入的验证码值
+      codevalue: "",
+      //发送的验证码值
+      code: "99999",
+      // 控制弹出的验证码框透明度
+      show: 0,
+      //验证码按钮内的字符
+      codebutton: "发送验证码",
+      //验证码按钮是否禁用
+      dis: false,
     };
   },
   methods: {
@@ -101,6 +137,7 @@ export default {
         return false;
       }
     },
+    // 验证手机号
     phonemsg(htk) {
       let phoneRegExp = /^1[3-9][0-9]{9}$/;
       if (phoneRegExp.test(this.phone)) {
@@ -117,6 +154,7 @@ export default {
         return false;
       }
     },
+    // 验证密码
     passwordmsg(atk) {
       let passwordRegExp = /^[0-9A-Za-z]{8,14}$/;
       if (passwordRegExp.test(this.password)) {
@@ -133,20 +171,59 @@ export default {
         return false;
       }
     },
-    //请求
+    //验证码
+    codemsg() {
+      var second = 15;
+      this.dis = true;
+      this.codebutton = `${second}s后重发`;
+      var timer = setInterval(() => {
+        second--;
+        if (second > 0) {
+          this.codebutton = `${second}s后重发`;
+        } else {
+          clearInterval(timer);
+          this.dis = false;
+          this.codebutton = "重新发送验证码";
+        }
+      }, 1000);
+      //清除原验证码
+      this.code = "";
+      //声明循环次数
+      var codelength = 4;
+      //生成随机4位数字验证码
+      for (var i = 0; i < codelength; i++) {
+        this.code += Math.floor(Math.random() * 10);
+      }
+      //显示验证码
+      this.show = 1;
+      //
+    },
+
+    //发起注册请求
     handle() {
-      if (this.phonemsg(1) && this.passwordmsg(1)) {
-        let obj = {
-          uname:this.uname,
-          phone: this.phone,
-          password: this.password,
-        };
-        let str = this.qs.stringify(obj);
-        this.axios.post("/register", str).then((res) => {
-          MessageBox.alert("注册成功!").then((action) => {
-            this.$router.push("/login");
+      //检测验证码是否一致
+      if (this.codevalue == this.code) {
+        //当手机号和密码吗验证通过时
+        if (this.phonemsg(1) && this.passwordmsg(1)) {
+          let obj = {
+            uname: this.uname,
+            phone: this.phone,
+            password: this.password,
+          };
+          let str = this.qs.stringify(obj);
+          this.axios.post("/register", str).then((res) => {
+            if (res.data.code == 201) {
+              MessageBox("提示", "手机号已存在");
+            } else if (res.data.code == 200) {
+              MessageBox.alert("注册成功!").then((action) => {
+                this.$router.push("/login");
+              });
+            }
           });
-        });
+        }
+        // 验证码错误时
+      } else {
+        MessageBox("提示", "验证码错误");
       }
     },
   },

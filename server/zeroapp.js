@@ -33,7 +33,7 @@ const pool = mysql.createPool({
   // 数据库用户的密码
   password: '',
   // 数据库名称
-  database: 'zero',
+  database: 'acw',
   // 最大连接数
   connectionLimit: 15
 });
@@ -49,15 +49,15 @@ server.post('/register', (req, res) => {
   let phone = req.body.phone;
   let password = req.body.password;
   // 先需要以username为条件进行用户的查找操作
-  let sql = 'SELECT COUNT(lid) AS count FROM users WHERE uname=?';
+  let sql = 'SELECT COUNT(id) AS count FROM acw_user WHERE phone=?';
   // 执行SQL查询
-  pool.query(sql, [uname], (error, results) => {        
+  pool.query(sql, [phone], (error, results) => {        
     if (error) throw error;
     if (results[0].count) {
       res.send({ code: 201, message: "用户注册失败" });
     } else {
       // 插入记录的SQL语句
-      sql = 'INSERT INTO users(uname,phone,password) VALUES(?,?,?)';
+      sql = 'INSERT INTO acw_user(uname,phone,password) VALUES(?,?,?)';
       // 执行SQL语句
       pool.query(sql, [uname, phone,password], (error, results) => {
         if (error) throw error;
@@ -68,15 +68,33 @@ server.post('/register', (req, res) => {
 
 });
 
-// 用户登录的接口
-server.post('/login',(req,res)=>{
+// 用户密码登录的接口
+server.post('/login1',(req,res)=>{
   // 获取用户名和密码信息
   let phone = req.body.phone;
   let password = req.body.password;
   // SQL查询语句
-  let sql = 'SELECT lid uname FROM users WHERE phone=? AND password=?';
+  let sql = 'SELECT id,uname,avatar FROM acw_user WHERE phone=? AND password=?';
   // 执行SQL查询
   pool.query(sql,[phone,password],(error,results)=>{
+    console.log(results.length)
+    if(error) throw error;
+    if(results.length){
+      res.send({code:200,message:"登录成功",info:results[0]});
+    } else {
+      res.send({code:201,message:"登录失败"});
+    }
+  });
+});
+
+// 用户验证码登录的接口
+server.post('/login2',(req,res)=>{
+  // 获取用户名
+  let phone = req.body.phone;
+  // SQL查询语句
+  let sql = 'SELECT id,uname,avatar FROM acw_user WHERE phone=?';
+  // 执行SQL查询
+  pool.query(sql,[phone],(error,results)=>{
     console.log(results.length)
     if(error) throw error;
     if(results.length){
