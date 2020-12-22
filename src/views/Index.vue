@@ -1,9 +1,24 @@
 <template>
   <div class="index">
+    <table></table>
+     <mt-header class="color_h1" fixed>
+      <router-link to="/" slot="left">
+        <mt-button>
+          <img class="img_h1" src="../assets/details/logo.png" alt="" />
+        </mt-button>
+      </router-link>
+        <router-link to="/" slot="right">
+       
+          <mt-button>
+            <img class="img_h2" src="../assets/details/menu.png" alt=""/>
+          </mt-button>
+         </router-link>
+    </mt-header>
+    <div >
     <div class="index_top">
       <div class="index_top1">
         <div class="input_">
-          <router-link to="/">
+          <router-link to="/search">
             <img src="../assets/index_imag/search.png" alt="">
             <span>狗是色盲吗？</span> 
           </router-link>
@@ -43,7 +58,7 @@
       <div class="index_top2">
         <ul>
           <li v-for="(k,i) of category" :key="i">
-            <router-link to="/">
+            <router-link to="/aichong">
               <img :src="k.image" alt=""><span>{{k.category_name}}</span></router-link>
           </li>
         </ul>
@@ -52,7 +67,7 @@
         <div class="title_">特卖专区</div>
         <div class="shop_show">
           <div class="shop_item" v-for="(k,i) of special" :key="i">
-            <a href="#">
+            <router-link :to="`/details/${k.did}`">
               <span class="shop_img">
               <img :src="k.avatar" alt="">
               </span> 
@@ -60,7 +75,7 @@
               <p class="shop_price">
                 <span>特价：￥</span><span class="font_size17">{{k.price}}</span>
               </p>
-            </a>
+            </router-link>
           </div>
         </div> 
       </div>
@@ -68,16 +83,23 @@
         <img src="../assets/index_imag/icon.png" alt="">
         <span>您可能喜欢的</span>
       </div>
+      <product-listL></product-listL>
     </div>
+    </div>
+    <!-- <qa-bottom></qa-bottom> -->
   </div>
 </template>
 <style>
 /* *{margin: 0;padding: 0;box-sizing: content-box} */
 /* 内容1 */
+/* .index .qaheaderNav{
+  background-color: #FFD358;
+  border-bottom: 0;
+  } */
 .index_top{
   background: #F5F5F5;
   padding-bottom: 1.41rem;
-  margin-top: 1.31rem;
+ margin-top: 1.3rem;
 }
 .index .index_top1 {
   /* width: 100%; */
@@ -223,12 +245,12 @@ export default {
     this.axios.get('/category').then(res=>{
       // console.log(res.data)
       let category=res.data.results
-      console.log(category)
+      // console.log(category)
       category.forEach(item=>{
         item.image=require('../assets/index_imag/'+item.category_image);
       this.category.push(item)
       })
-      console.log(this.category)
+      // console.log(this.category)
     })
     this.axios.get('/indexlist').then(res=>{
       let index_list=res.data.results;
@@ -241,10 +263,10 @@ export default {
     //  [special_1,special_2,special_3]=index_list
     //  special.push(special_1,special_2,special_3)
       
-      let special= index_list.splice(0,3)
+      let special= index_list.splice(-3,3)
       this.special=special;
-      console.log(index_list)
-      console.log(special)
+      // console.log(index_list)
+      // console.log(special)
     })
   }
 }
